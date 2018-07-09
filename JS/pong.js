@@ -130,6 +130,18 @@ class Pong {
     }
     drawScore() {
         const aling = this._canvas.width / 3;
+        const CHARS_W = this.CHAR_PIXEL * 4;
+        this.players.forEach((player, index) => {
+            const chars = player.score.toString().split('');
+            const offset = aling * 
+                           (index + 1) - 
+                           (CHARS_W * chars.length / 2) * 
+                           this.CHAR_PIXEL / 2;
+            chars.forEach((char, pos) => {
+                this._context.drawImage(this.CHARS[char|0],
+                                        offset + pos* CHARS_W)
+            });
+        });
     }
     reset() {
         this.ball.pos.x = this._canvas.width / 2;
