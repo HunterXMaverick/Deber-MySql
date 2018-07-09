@@ -122,6 +122,8 @@ class Pong {
 
         this.drawRect(this.ball);
         this.players.forEach(player => this.drawRect(player));
+
+        this.drawScore();
     }
     drawRect(rect) {
         this._context.fillStyle = '#fff';
@@ -135,11 +137,11 @@ class Pong {
             const chars = player.score.toString().split('');
             const offset = aling * 
                            (index + 1) - 
-                           (CHARS_W * chars.length / 2) * 
+                           (CHARS_W * chars.length / 2) + 
                            this.CHAR_PIXEL / 2;
             chars.forEach((char, pos) => {
                 this._context.drawImage(this.CHARS[char|0],
-                                        offset + pos* CHARS_W)
+                                        offset + pos* CHARS_W, 20);
             });
         });
     }
