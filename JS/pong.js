@@ -31,6 +31,13 @@ class Ball extends Rect {
     }
 }
 
+class Player extends Rect{
+    constructor(){
+        super(20, 100);
+        this.score = 0;
+    }
+}
+
 class Pong {
     constructor(canvas) {
         this._canvas = canvas;
@@ -43,6 +50,17 @@ class Pong {
         this.ball.vel.x = 100;
         this.ball.vel.y = 100;
 
+        this.players = [
+            new Player,
+            new Player,
+        ];
+
+        this.players[0].pos.x = 40;
+        this.players[1].pos.x = this._canvas.width - 40;
+        this.players.forEach(player =>{
+            player.pos.y = this._canvas.height / 2;
+        })
+
         let lasTime;
         const calback = (millis) => {
             if (lasTime) {
@@ -52,6 +70,14 @@ class Pong {
             requestAnimationFrame(calback);
         };
         calback();
+    }
+    draw() {
+        this._context.fillStyle = '#000';
+        this._context.fillRect(0, 0,
+            this._canvas.width, this._canvas.height);
+
+        this.drawRect(this.ball);
+        this.players.forEach(player => this.drawRect(player));
     }
     drawRect(rect) {
         this._context.fillStyle = '#fff';
@@ -68,16 +94,7 @@ class Pong {
         if (this.ball.top < 0 || this.ball.bottom > this._canvas.height) {
             this.ball.vel.y = -this.ball.vel.y;
         }
-
-        this._context.fillStyle = '#000';
-        this._context.fillRect(0, 0,
-            this._canvas.width, this._canvas.height);
-
-        this._context.fillStyle = '#fff';
-        this._context.fillRect(this.ball.pos.x, this.ball.pos.y,
-            this.ball.size.x, this.ball.size.y);
-
-        this.drawRect(this.ball);
+        this.draw();
     }
 }
 
