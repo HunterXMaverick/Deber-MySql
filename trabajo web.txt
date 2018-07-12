@@ -1,0 +1,86 @@
+namespace WebApplication2.Controllers
+{
+    [Route("api/[controller]")]
+    public class ValuesController : Controller
+    {
+        // GET: api/<controller>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
+
+        //// POST api/<controller>
+        //[HttpPost]
+        //public void Post([FromBody]string value)
+        //{
+
+        //}
+        [HttpPost]
+        public puntajes Index([FromBody]puntajes puntos)
+        {
+            return puntos;
+        }
+        public class puntajes
+        {
+            public string puntosUno { get; set; }
+            public string puntosDos { get; set; }
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
+}
+
+
+
+
+
+
+JSON
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script>
+    puntajes ={
+        puntosUno: 2,
+        puntosDos: 5
+    };
+    var puntajesJSON = JSON.stringify(puntajes);
+        $.ajax({
+        url: 'http://localhost:50592/api/values',
+        type: 'POST',
+        dataType:'JSON',
+        contentType: 'application/json',
+        data: puntajesJSON,
+        beforeSend: function(data){alert('Evniando');},
+        succes: function(result){console.log('Enviado');}
+    });
+</script>
+</body>
+
+</html>
